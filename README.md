@@ -4,6 +4,7 @@ importar desde PHPMyAdmin : database/formula1.sql
 
 Integrantes : Santiago Tomás Macht (santimacht2468@gmail.com) - Juan Cruz Olaechea(olaecheajc@gmail.com)
 
+para que se generen las tablas automaticamente hay que tener creada una db llamada "formula1" y en postman generar alguna consulta (GET por ejemplo)
 
 
 
