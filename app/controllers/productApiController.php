@@ -21,6 +21,7 @@ class ProductApiController extends ApiController{
 
         $body = $this->getData();
 
+        $image = $body->image
         $name = $body->name;
         $price = $body->price;
         $stock= $body->stock;

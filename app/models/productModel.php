@@ -10,13 +10,19 @@ class ProductModel extends Model {
         return $query->fetch(PDO::FETCH_OBJ);   
     }
 
-     public function insertProduct($name, $price, $stock, $category){
-        $query = $this->db->prepare('INSERT INTO products (name, price, stock, CategoryId) VALUES (?,?,?,?)');
-        $query->execute([$name, $price, $stock, $category]);
-
-        return $this->db->lastInsertId();
+    public function insertProduct($image, $name, $price, $stock, $categoryId){
+        $query = $this->db->prepare('INSERT INTO products ( `image`, `name`, `price`, `stock`, `CategoryId` ) VALUES(:image, :name, :price, :stock, :CategoryId)');
+        $params = array(
+            'image' => $image,
+            'name' => $name,
+            'price' => $price,
+            'stock' => $stock,
+            'CategoryId' => $categoryId
+        );
+        $query->execute($params);
+        return $this->db->lastInsertID();
     }
-
+    
     public function deleteProduct($id){
         $query = $this->db->prepare('DELETE FROM products WHERE id = ?');
         $query->execute([$id]);
