@@ -1,5 +1,6 @@
 <?php
 
+require_once './database/config.php';
 require_once 'libs/router.php';
 require_once './app/controllers/productApiController.php';
 require_once './app/controllers/categoryApiController.php';
@@ -13,6 +14,7 @@ $router = new Router();
 
 $router->addRoute('productos', 'GET', 'ProductApiController', 'showProducts');
 $router->addRoute('productos/:ID', 'GET', 'ProductApiController', 'showProducts');
+$router->addRoute('productos/:sort/:order', 'GET', 'ProductApiController', 'showProducts');
 $router->addRoute('productos', 'POST', 'ProductApiController', 'agregarProd');
 $router->addRoute('productos/:ID', 'DELETE', 'ProductApiController', 'borrarProd');
 $router->addRoute('productos/:ID', 'PUT', 'ProductApiController', 'updateProd');

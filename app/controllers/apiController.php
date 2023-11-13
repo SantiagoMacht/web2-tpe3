@@ -1,6 +1,6 @@
 <?php
 
-require_once './app/views/api.view.php';
+require_once './app/views/ApiView.php';
 
 abstract class ApiController{
 

@@ -4,10 +4,29 @@ require_once "./app/models/model.php";
 
 class ProductModel extends Model {
 
-    public function getProductById($id) {
-        $query = $this->db->prepare('SELECT * FROM products INNER JOIN category ON products.CategoryId = category.CategoryId WHERE products.product_id = ? ');
+    function getProducts(){
+        $query = $this->db->prepare('SELECT * FROM products');
+        $query->execute();
+
+        $prods = $query->fetchAll(PDO::FETCH_OBJ);
+
+        return $prods;
+    }
+    public function getProduct($id) {
+        $query = $this->db->prepare('SELECT * FROM products WHERE product_id = ? ');
         $query->execute([$id]);
-        return $query->fetch(PDO::FETCH_OBJ);   
+        $prod = $query->fetch(PDO::FETCH_OBJ);
+
+        return $prod;
+    }
+    function getProductsOrderBy($sort, $order){
+        $query = $this->db->prepare("SELECT * FROM `products` ORDER BY $sort $order");
+
+        $query->execute();
+
+        $prodOrd = $query->fetchAll(PDO::FETCH_OBJ);
+
+        return $prodOrd;
     }
 
     public function insertProduct($image, $name, $price, $stock, $categoryId){

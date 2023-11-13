@@ -3,7 +3,30 @@
 require_once "./app/models/model.php";
 
 class CategoryModel extends Model{
+    function getCategorys(){
+        $query = $this->db->prepare('SELECT * FROM category');
+        $query->execute();
 
+        $categorys = $query->fetchAll(PDO::FETCH_OBJ);
+
+        return $categorys;
+    }
+	public function getCategory($id) {
+        $query = $this->db->prepare('SELECT * FROM category WHERE CategoryId = ? ');
+        $query->execute([$id]);
+        $category = $query->fetch(PDO::FETCH_OBJ);
+
+        return $category;
+    }
+	function getCategorysOrderBy($sort, $order){
+        $query = $this->db->prepare("SELECT * FROM `category` ORDER BY $sort $order");
+
+        $query->execute();
+
+        $catOrd = $query->fetchAll(PDO::FETCH_OBJ);
+
+        return $catOrd;
+    }
 	public function getCategoryById($id){
 		$query = $this->db->prepare('SELECT * FROM category WHERE CategoryId = ?');
         $query->execute([$id]);

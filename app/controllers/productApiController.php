@@ -13,15 +13,40 @@ class ProductApiController extends ApiController{
         $this->modelProd = new ProductModel();      
     }
 
-    public function showProducts(){
+    public function showProducts($params = []){
+        if (isset($_GET['sort']) && isset($_GET['order'])){
+            $sort = $_GET['sort'];
+            $order = $_GET['order'];
 
+            $validSortOptions = ['product_id', 'name', 'price', 'stock', 'CategoryId'];
+            $validOrderOptions = ['asc', 'desc'];
+            
+            if(in_array($sort, $validSortOptions) && in_array($order, $validOrderOptions)){
+                $prodOrd = $this->modelProd->getProductsOrderBy($sort, $order);
+                $this->view->response($prodOrd, 200);
+                return;
+            } else {
+                $this->view->response('Los parametros no son validos', 400);
+                return;
+            }
+        }
+        if(empty($params)){
+            $prods = $this->modelProd->getProducts();
+            $this ->view ->response($prods, 200);
+        } else {
+            $prod = $this->modelProd->getProduct($params[":ID"]);
+            if(!empty($prod)){
+                return $this->view->response($prod, 200);
+            } else {
+                $this->view->response('No existe el producto con el ID seleccionado', 404);
+            }
+        }
     }
-
      public function agregarProd($params = []){
 
         $body = $this->getData();
 
-        $image = $body->image
+        $image = $body->image;
         $name = $body->name;
         $price = $body->price;
         $stock= $body->stock;
