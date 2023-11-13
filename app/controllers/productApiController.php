@@ -44,22 +44,26 @@ class ProductApiController extends ApiController{
     }
      public function agregarProd($params = []){
 
+        
         $body = $this->getData();
 
-        $image = $body->image;
         $name = $body->name;
         $price = $body->price;
         $stock= $body->stock;
         $category = $body->CategoryId;
 
-        $id = $this->modelProd->insertProduct($name, $price, $stock, $category);
+        if(isset($body->name, $body->price, $body->stock, $body->CategoryId)){
+ 			$id = $this->modelProd->insertProduct($name, $price, $stock, $category);
 
-        $this->view->response('El producto fue insertado con el id= ' .$id, 201);
+ 	    	$this->view->response('El producto fue insertado con el id= ' .$id, 201);
+        } else {
+        	 $this->view->response('Los campos necesarios no estan presentes en la solicitud.', 400);
+        }
     }
 
     public function borrarProd($params = []){
         $id = $params[':ID'];
-        $product = $this->modelProd->getProductById($id);
+        $product = $this->modelProd->getProduct($id);
 
         if($product){
             $this->modelProd->deleteProduct($id);
@@ -72,7 +76,7 @@ class ProductApiController extends ApiController{
     public function updateProd($params = []){
 
         $id = $params[':ID'];
-        $product = $this->modelProd->getProductById($id);
+        $product = $this->modelProd->getProduct($id);
 
         if($product){
             $body = $this->getData();

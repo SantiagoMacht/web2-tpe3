@@ -38,7 +38,7 @@ class CategoryModel extends Model{
 
 	public function insertCategory(){
 		$query = $this->db->prepare('INSERT INTO category (type) VALUES(?)');
-		$query->execute([$_POST['category']]);
+		$query->execute(['type']);
 		return $this->db->lastInsertID();
 	}
 

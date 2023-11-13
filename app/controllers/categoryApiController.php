@@ -43,31 +43,37 @@ class CategoryApiController extends ApiController{
     }
     public function agregarCategory(){
 
-        $body = $this->getData();
+        if (isset($body->type)) {
+        	$nombre = $body->type;
 
-        $nombre = $body->type;
+        	$id = $this->modelCategory->insertCategory($nombre);
 
-        $id = $this->modelCategory->insertCategory($nombre);
-
-        $this->view->response('El marca fue insertado con el id= ' .$id, 201);
-
+        	$this->view->response('La categoría fue insertada con el id= ' . $id, 201);
+   		 } else {
+       		 $this->view->response('El campo necesario no esta presente en la solicitud.', 400);
+   		 }
     }
 
     public function updateCategory($params = []){
         $id = $params[':ID'];
-        $marca = $this->modelCategory->getCategoryById($id);
+        $category = $this->modelCategory->getCategory($id);
 
-        if($marca){
-            $body = $this->getData();
+		if ($category) {
+        $body = $this->getData();
 
-            $nombre = $body->type;
-            
-            $this->modelMarca->updateMarca($id, $nombre);
+	        if (isset($body->type)) {
+	            $nombre = $body->type;
 
-            $this->view->response('La marca con id= '.$id.' ha sido modificada.', 200);
-        } else {
-            $this->view->response('La marca con id= '.$id.' no existe.', 404);
-        }
+	            $category->type = $nombre;
+	            $this->modelCategory->updateCategory($category);
+
+	            $this->view->response('La categoria con id= ' . $id . ' ha sido modificada.', 200);
+	        } else {
+	            $this->view->response('El campo necesario no esta presente en la solicitud.', 400);
+	        }
+    	} else {
+        $this->view->response('La categoria con id= ' . $id . ' no existe.', 404);
+    	}
     }
 
     public function borrarCategory($params = []){
