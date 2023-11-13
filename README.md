@@ -5,10 +5,6 @@ importar desde PHPMyAdmin : database/formula1.sql
 Integrantes : Santiago Tomás Macht (santimacht2468@gmail.com) - Juan Cruz Olaechea(olaecheajc@gmail.com)
 
 
-en caso de reentrega de la segunda parte: https://github.com/SantiagoMacht/web2-tpe
-
-está completo con sus errores corregidos.
-
 
 
 ACCIONES QUE SE PUEDEN REALIZAR EN ESTA TERCERA ENTREGA:
